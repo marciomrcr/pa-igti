@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { StyledButton, Wrapper } from '../App.styles';
+import Cart from '../components/cart/Cart';
 import Item from '../components/item/Item';
 
 export type CartItemType = {
@@ -25,9 +26,35 @@ export default function Home() {
     'products',
     getProducts
   );
+
   console.log(data);
-  const getTotalItems = (items: CartItemType[]) => null;
-  const handleAddToCart = (clickedItem: CartItemType) => null;
+
+  const getTotalItems = (items: CartItemType[]) =>
+    items.reduce((ack: number, item) => ack + item.amount, 0);
+
+  const handleAddToCart = (clickedItem: CartItemType) => {
+    setCartItems((prev) => {
+      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
+      if (isItemInCart) {
+        return prev.map((item) =>
+          item.id === clickedItem.id
+            ? {
+                ...item,
+                amount: item.amount + 1,
+              }
+            : item
+        );
+      }
+      return [
+        ...prev,
+        {
+          ...clickedItem,
+          amount: 1,
+        },
+      ];
+    });
+  };
+
   const handleRemoveFromCart = () => null;
 
   if (isLoading) return <LinearProgress />;
@@ -36,7 +63,11 @@ export default function Home() {
   return (
     <Wrapper>
       <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
-        Cart
+        <Cart
+          cartItems={cartItems}
+          addToCart={handleAddToCart}
+          removeFromCart={handleRemoveFromCart}
+        />
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalItems(cartItems)} color='error'>

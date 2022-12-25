@@ -12,9 +12,9 @@ const Item: React.FC<Props> = ({ item, handleAddToCart }) => (
   <Wrapper>
     <img src={item.image} alt={item.title} />
     <div>
-      <h3>{item.title}</h3>
+      <h4>{item.title}</h4>
       <p>{item.description}</p>
-      <h3>${item.price}</h3>
+      <h4>${item.price}</h4>
     </div>
     <Button onClick={() => handleAddToCart(item)}>Adicionar ao Carrinho</Button>
   </Wrapper>

@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   border: 1px solid lightblue;
   border-radius: 20px;
   height: 100%;
@@ -20,6 +20,7 @@ export const Wrapper = styled.div`
 
   div {
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
     padding: 1rem;
     height: 100%;
   }
